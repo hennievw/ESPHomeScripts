@@ -1,0 +1,103 @@
+esphome:
+  name: irrigation
+
+esp8266:
+  board: nodemcu
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: ""
+
+ota:
+  password: ""
+
+wifi:
+  ssid: "***"
+  password: "********"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Irrigation Fallback Hotspot"
+    password: "*****"
+    
+switch:
+  - platform: template
+    name: "Water zone 1"
+    lambda: |-
+      if (id(ZONE1SW).state) {
+        return true;
+      } else {
+        return false;
+      }
+    turn_on_action:
+      - switch.turn_on: ZONE1SW
+      - delay: 1200s
+      - switch.turn_off: ZONE1SW
+    turn_off_action:
+      - switch.turn_off: ZONE1SW
+  
+  - platform: template
+    name: "Water zone 2"
+    lambda: |-
+      if (id(ZONE2SW).state) {
+        return true;
+      } else {
+        return false;
+      }
+    turn_on_action:
+      - switch.turn_on: ZONE2SW
+      - delay: 1200s
+      - switch.turn_off: ZONE2SW
+    turn_off_action:
+      - switch.turn_off: ZONE2SW
+  
+  - platform: template
+    name: "Water zone 3"
+    lambda: |-
+      if (id(ZONE3SW).state) {
+        return true;
+      } else {
+        return false;
+      }
+    turn_on_action:
+      - switch.turn_on: ZONE3SW
+      - delay: 1200s
+      - switch.turn_off: ZONE3SW
+    turn_off_action:
+      - switch.turn_off: ZONE3SW
+  
+  - platform: template
+    name: "Water zone 4"
+    lambda: |-
+      if (id(ZONE4SW).state) {
+        return true;
+      } else {
+        return false;
+      }
+    turn_on_action:
+      - switch.turn_on: ZONE4SW
+      - delay: 1200s
+      - switch.turn_off: ZONE4SW
+    turn_off_action:
+      - switch.turn_off: ZONE4SW
+  
+  - platform: gpio
+    pin: 5
+    id: ZONE1SW
+    
+  - platform: gpio
+    pin: 4
+    id: ZONE2SW
+    
+  - platform: gpio
+    pin: 14
+    id: ZONE3SW
+
+  - platform: gpio
+    pin: 12
+    id: ZONE4SW
+
+captive_portal:
